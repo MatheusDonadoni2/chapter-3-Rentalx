@@ -1,19 +1,23 @@
 import { ICategoriesRepository } from '../../repositories/ICategoryRepository';
 
 interface IRequest {
-  name: string;
-  description: string;
+    name: string;
+    description: string;
 }
 class CreateCategoryUseCase {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private categoriesRepository: ICategoriesRepository) { }
-  execute({ description, name }: IRequest): void {
-    const categoryAlreadyExist = this.categoriesRepository.findByName(name);
+    // eslint-disable-next-line prettier/prettier
+    constructor(private categoriesRepository: ICategoriesRepository) { }
 
-    if (categoryAlreadyExist) {
-      throw new Error('Category already exists.');
+    async execute({ description, name }: IRequest): Promise<void> {
+        const categoryAlreadyExist = await this.categoriesRepository.findByName(
+            name,
+        );
+        console.log('UseCase POST Category: ', categoryAlreadyExist);
+
+        // if (categoryAlreadyExist) {
+        //    throw new Error('Category already exists.');
+        // }
+        // this.categoriesRepository.create({ name, description });
     }
-    this.categoriesRepository.create({ name, description });
-  }
 }
 export { CreateCategoryUseCase };
