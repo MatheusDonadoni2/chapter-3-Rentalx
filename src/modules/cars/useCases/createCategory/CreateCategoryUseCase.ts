@@ -12,12 +12,11 @@ class CreateCategoryUseCase {
         const categoryAlreadyExist = await this.categoriesRepository.findByName(
             name,
         );
-        console.log('UseCase POST Category: ', categoryAlreadyExist);
 
-        // if (categoryAlreadyExist) {
-        //    throw new Error('Category already exists.');
-        // }
-        // this.categoriesRepository.create({ name, description });
+        if (categoryAlreadyExist) {
+            throw new Error('Category already exists.');
+        }
+        this.categoriesRepository.create({ name, description });
     }
 }
 export { CreateCategoryUseCase };
